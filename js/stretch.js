@@ -25,7 +25,7 @@ Stretch = (function() {
     this.css = __bind(this.css, this);
     this.destroy = __bind(this.destroy, this);
     this.measure = __bind(this.measure, this);
-    var id, max, properties, property, shadow, test, value, _i, _len;
+    var id, max, properties, property, shadow, value, _i, _len;
     id = "" + (elm.attr('id')) + "-textmetrics";
     if (typeof this._shadow === "undefined") {
       shadow = $("#" + id);
@@ -38,8 +38,7 @@ Stretch = (function() {
         properties = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'word-wrap', "width"];
         for (_i = 0, _len = properties.length; _i < _len; _i++) {
           property = properties[_i];
-          test = this.css(elm, property);
-          value = elm.css(property);
+          value = this.css(elm, property);
           shadow.css(property, value);
         }
         shadow.css("height", this.css(shadow, "line-height"));

@@ -23,8 +23,7 @@ class Stretch
         shadow = $(shadow)      
         properties = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'word-wrap', "width"]
         for property in  properties
-          test = @css elm, property
-          value = elm.css property
+          value = @css elm, property
           shadow.css property, value
         shadow.css "height", @css(shadow, "line-height")
         shadow.appendTo document.body
