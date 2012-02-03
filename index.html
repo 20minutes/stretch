@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+	<head>
+		<title></title>
+		<script src="js/vendor/zepto.js" type="text/javascript" charset="utf-8"></script>		
+		<script src="js/textmetrics.js" type="text/javascript" charset="utf-8"></script>	
+		<script src="js/test.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			.textmetrics {
+				position: absolute;
+			  left: -5000px;
+			  visibility: hidden;
+			}
+			.resizable {
+				overflow: hidden;
+				/* NOTE : ne prend pas en compte le resize du champ */
+				resize: none;
+			}
+		</style>
+	</head>
+	<body>
+		<form>
+			<label>Contenu : </label>
+			<textarea name="description" id="description" rows="1" placeholder="R&eacute;diger un commentaire..." ></textarea>			
+		</form>
+	</body>
+</html>
