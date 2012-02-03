@@ -1,18 +1,5 @@
-var Stretch, _,
+var Stretch,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-_ = {
-  toCapitalize: function(name) {
-    var indice, suffixe;
-    while ((indice = name.indexOf("-")) > -1) {
-      name = name.replace("-", "");
-      suffixe = name.slice(indice);
-      suffixe = suffixe.replace(suffixe[0], suffixe[0].toUpperCase());
-      name = name.replace(name.slice(indice), suffixe);
-    }
-    return name;
-  }
-};
 
 Stretch = (function() {
 
@@ -58,6 +45,17 @@ Stretch = (function() {
     this.resize();
   }
 
+  Stretch.prototype.capitalize = function(name) {
+    var indice, suffixe;
+    while ((indice = name.indexOf("-")) > -1) {
+      name = name.replace("-", "");
+      suffixe = name.slice(indice);
+      suffixe = suffixe.replace(suffixe[0], suffixe[0].toUpperCase());
+      name = name.replace(name.slice(indice), suffixe);
+    }
+    return name;
+  };
+
   Stretch.prototype.measure = function() {
     this._shadow.val("" + (this._node.val()) + "...");
     return {
@@ -71,7 +69,7 @@ Stretch = (function() {
   };
 
   Stretch.prototype.css = function(el, property) {
-    return el.css(property) || el.css(_.toCapitalize(property));
+    return el.css(property) || el.css(this.capitalize(property));
   };
 
   Stretch.prototype.resize = function() {

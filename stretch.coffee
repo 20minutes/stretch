@@ -1,12 +1,3 @@
-_ = 
-  toCapitalize: (name) ->
-    while (indice = name.indexOf "-") > -1
-      name = name.replace "-", ""
-      suffixe = name.slice(indice)
-      suffixe = suffixe.replace suffixe[0], suffixe[0].toUpperCase()
-      name = name.replace name.slice(indice), suffixe      
-    name
-
 class Stretch
   max: null,
   min: null,
@@ -35,6 +26,14 @@ class Stretch
     @_node = elm
     @resize()
   
+  capitalize: (name) ->
+    while (indice = name.indexOf "-") > -1
+      name = name.replace "-", ""
+      suffixe = name.slice(indice)
+      suffixe = suffixe.replace suffixe[0], suffixe[0].toUpperCase()
+      name = name.replace name.slice(indice), suffixe      
+    name
+  
   measure: =>
     @_shadow.val "#{@_node.val()}..."
     {
@@ -45,7 +44,7 @@ class Stretch
     document.body.removeChild @_shadow
     
   css: (el, property) =>
-    el.css(property) or el.css(_.toCapitalize property)
+    el.css(property) or el.css(@capitalize property)
     
   resize: =>
     height = this.measure().height
