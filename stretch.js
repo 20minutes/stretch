@@ -7,33 +7,41 @@ Stretch = (function() {
 
   Stretch.prototype.min = null;
 
+  Stretch.prototype.shadow = function() {
+    return $("#" + this.id + "-textmetrics");
+  };
+
+  Stretch.prototype.el = function() {
+    var el;
+    el = $("#" + this.id);
+    if (!el.hasClass("resizable")) el.addClass("resizable");
+    return el;
+  };
+
   function Stretch(elm) {
     this.resize = __bind(this.resize, this);
     this.css = __bind(this.css, this);
     this.destroy = __bind(this.destroy, this);
     this.measure = __bind(this.measure, this);
-    var id, max, properties, property, shadow, value, _i, _len;
-    id = "" + (elm.attr('id')) + "-textmetrics";
-    if (typeof this._shadow === "undefined") {
-      shadow = $("#" + id);
-      if (!shadow.get(0)) {
-        shadow = document.createElement("textarea");
-        shadow.id = id;
-        shadow.rows = 1;
-        shadow.className = "textmetrics";
-        shadow = $(shadow);
-        properties = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'word-wrap', "width"];
-        for (_i = 0, _len = properties.length; _i < _len; _i++) {
-          property = properties[_i];
-          value = this.css(elm, property);
-          shadow.css(property, value);
-        }
-        shadow.css("height", this.css(shadow, "line-height"));
-        shadow.appendTo(document.body);
-        this._shadow = shadow;
+    this.el = __bind(this.el, this);
+    var max, properties, property, shadow, value, _i, _len;
+    this.id = elm.attr('id');
+    shadow = this.shadow();
+    if (!shadow.get(0)) {
+      shadow = document.createElement("textarea");
+      shadow.id = "" + this.id + "-textmetrics";
+      shadow.rows = 1;
+      shadow.className = "textmetrics";
+      shadow = $(shadow);
+      properties = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'word-wrap', "width"];
+      for (_i = 0, _len = properties.length; _i < _len; _i++) {
+        property = properties[_i];
+        value = this.css(elm, property);
+        shadow.css(property, value);
       }
+      shadow.css("height", this.css(shadow, "line-height"));
+      shadow.appendTo(document.body);
     }
-    elm.addClass("resizable");
     if (this.css(elm, "min-height") === "0px") {
       elm.css("min-height", "" + (shadow.height()) + "px");
     }
@@ -41,8 +49,7 @@ Stretch = (function() {
     if ((max = this.css(elm, "max-height").replace("px", "")) !== "none") {
       this.max = max * 1;
     }
-    this._node = elm;
-    this.resize();
+    $(document.body).delegate("#" + (elm.attr('id')), "keyup", this.resize);
   }
 
   Stretch.prototype.capitalize = function(name) {
@@ -57,10 +64,12 @@ Stretch = (function() {
   };
 
   Stretch.prototype.measure = function() {
-    this._shadow.val("" + (this._node.val()) + "...");
+    var shadow;
+    shadow = this.shadow();
+    shadow.val("" + (this.el().val()) + "...");
     return {
-      width: this._shadow.get(0).scrollWidth,
-      height: this._shadow.get(0).scrollHeight
+      width: shadow.get(0).scrollWidth,
+      height: shadow.get(0).scrollHeight
     };
   };
 
@@ -77,7 +86,7 @@ Stretch = (function() {
     height = this.measure().height;
     height = Math.max(this.min, height);
     if (this.max) height = Math.min(height, this.max);
-    return this._node.css("height", height);
+    return this.el().css("height", height);
   };
 
   return Stretch;

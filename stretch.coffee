@@ -2,29 +2,33 @@ class Stretch
   max: null,
   min: null,
   
+  shadow: ->
+    $("##{@id}-textmetrics")
+    
+  el: =>
+    el = $("##{@id}")
+    el.addClass("resizable") if not el.hasClass "resizable"
+    el
+  
   constructor: (elm) ->
-    id = "#{elm.attr('id')}-textmetrics"    
-    if typeof @_shadow is "undefined"
-      shadow = $("##{id}")
-      if not shadow.get(0)
-        shadow = document.createElement "textarea"
-        shadow.id = id
-        shadow.rows = 1
-        shadow.className = "textmetrics"
-        shadow = $(shadow)      
-        properties = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'word-wrap', "width"]
-        for property in  properties
-          value = @css elm, property
-          shadow.css property, value
-        shadow.css "height", @css(shadow, "line-height")
-        shadow.appendTo document.body
-        @_shadow = shadow
-    elm.addClass "resizable"
+    @id = elm.attr('id')     
+    shadow = @shadow()    
+    if not shadow.get(0)
+      shadow = document.createElement "textarea"
+      shadow.id = "#{@id}-textmetrics"
+      shadow.rows = 1
+      shadow.className = "textmetrics"
+      shadow = $(shadow)      
+      properties = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'word-wrap', "width"]
+      for property in  properties
+        value = @css elm, property
+        shadow.css property, value
+      shadow.css "height", @css(shadow, "line-height")
+      shadow.appendTo document.body
     elm.css("min-height", "#{shadow.height()}px") if @css(elm, "min-height") is "0px"
     @min = @css(elm, "height").replace("px", "")
-    @max = max*1 if (max = @css(elm, "max-height").replace("px", "")) isnt "none"
-    @_node = elm
-    @resize()
+    @max = max*1 if (max = @css(elm, "max-height").replace("px", "")) isnt "none"        
+    $(document.body).delegate "##{elm.attr('id')}", "keyup", @resize
   
   capitalize: (name) ->
     while (indice = name.indexOf "-") > -1
@@ -34,12 +38,14 @@ class Stretch
       name = name.replace name.slice(indice), suffixe      
     name
   
-  measure: =>
-    @_shadow.val "#{@_node.val()}..."
+  measure: =>  
+    shadow = @shadow()
+    shadow.val "#{@el().val()}..."
     {
-      width: @_shadow.get(0).scrollWidth
-      height: @_shadow.get(0).scrollHeight
+      width: shadow.get(0).scrollWidth
+      height: shadow.get(0).scrollHeight
     }
+  
   destroy: =>
     document.body.removeChild @_shadow
     
@@ -50,4 +56,4 @@ class Stretch
     height = this.measure().height
     height = Math.max @min, height
     height = Math.min height, @max if @max
-    @_node.css "height", height
+    @el().css "height", height
