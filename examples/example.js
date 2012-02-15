@@ -1,4 +1,8 @@
-$(document).ready(function() {
-  var field;
-  field = new Stretch($("#description"));
-});
+(function() {
+
+  $(document).ready(function() {
+    var field;
+    return field = new Stretch($("#description"));
+  });
+
+}).call(this);
