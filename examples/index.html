@@ -1,10 +1,10 @@
 <!doctype html>
 <html>
 	<head>
-		<title></title>
+		<title>Strech it!</title>
 		<script src="../vendor/zepto.js" type="text/javascript" charset="utf-8"></script>		
 		<script src="../stretch.js" type="text/javascript" charset="utf-8"></script>	
-		<script src="exemple.js" type="text/javascript" charset="utf-8"></script>
+		<script src="example.js" type="text/javascript" charset="utf-8"></script>
 		<style>
 			.textmetrics {
 				position: absolute;
@@ -14,17 +14,15 @@
 				padding: 0;
 				margin: 0;
 			}
-			.resizable {
+			.resizable { // Doesn't take in account field resizing
 				overflow: hidden;
-				/* NOTE : ne prend pas en compte le resize du champ */
 				resize: none;
 			}
 		</style>
 	</head>
 	<body>
 		<form>
-			<label>Contenu : </label>
-			<textarea name="description" id="description" rows="1" placeholder="R&eacute;diger un commentaire..." ></textarea>			
+		 <textarea name="description" id="description" rows="1" placeholder="Write something..." ></textarea>			
 		</form>
 	</body>
 </html>
