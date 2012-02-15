@@ -20,7 +20,7 @@ class Stretch
       shadow.className = "textmetrics"
       shadow = $(shadow)      
       properties = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'word-wrap', "width"]
-      for property in  properties
+      for property in properties
         value = @css elm, property
         shadow.css property, value
       shadow.css "height", @css(shadow, "line-height")
@@ -33,7 +33,7 @@ class Stretch
   capitalize: (name) ->
     while (indice = name.indexOf "-") > -1
       name = name.replace "-", ""
-      suffixe = name.slice(indice)
+      suffixe = name.slice indice
       suffixe = suffixe.replace suffixe[0], suffixe[0].toUpperCase()
       name = name.replace name.slice(indice), suffixe      
     name
@@ -41,10 +41,8 @@ class Stretch
   measure: =>  
     shadow = @shadow()
     shadow.val "#{@el().val()}..."
-    {
-      width: shadow.get(0).scrollWidth
-      height: shadow.get(0).scrollHeight
-    }
+    width: shadow.get(0).scrollWidth
+    height: shadow.get(0).scrollHeight
   
   destroy: =>
     document.body.removeChild @_shadow
