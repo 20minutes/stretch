@@ -74,7 +74,7 @@ Stretch = (function() {
   };
 
   Stretch.prototype.destroy = function() {
-    return document.body.removeChild(this._shadow);
+    return document.body.removeChild(this.shadow);
   };
 
   Stretch.prototype.css = function(el, property) {

@@ -1,15 +1,15 @@
 class Stretch
   max: null,
   min: null,
-  
+
   shadow: ->
     $("##{@id}-textmetrics")
-    
+
   el: =>
     el = $("##{@id}")
     el.addClass("resizable") if not el.hasClass "resizable"
     el
-  
+
   constructor: (elm) ->
     @id = elm.attr('id')     
     shadow = @shadow()    
@@ -27,9 +27,9 @@ class Stretch
       shadow.appendTo document.body
     elm.css("min-height", "#{shadow.height()}px") if @css(elm, "min-height") is "0px"
     @min = @css(elm, "height").replace("px", "")
-    @max = max*1 if (max = @css(elm, "max-height").replace("px", "")) isnt "none"        
+    @max = max * 1 if (max = @css(elm, "max-height").replace("px", "")) isnt "none"        
     $(document.body).delegate "##{elm.attr('id')}", "keyup", @resize
-  
+
   capitalize: (name) ->
     while (indice = name.indexOf "-") > -1
       name = name.replace "-", ""
@@ -37,19 +37,19 @@ class Stretch
       suffixe = suffixe.replace suffixe[0], suffixe[0].toUpperCase()
       name = name.replace name.slice(indice), suffixe      
     name
-  
+
   measure: =>  
     shadow = @shadow()
     shadow.val "#{@el().val()}..."
     width: shadow.get(0).scrollWidth
     height: shadow.get(0).scrollHeight
-  
+
   destroy: =>
-    document.body.removeChild @_shadow
-    
+    document.body.removeChild @shadow
+
   css: (el, property) =>
     el.css(property) or el.css(@capitalize property)
-    
+
   resize: =>
     height = this.measure().height
     height = Math.max @min, height
