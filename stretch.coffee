@@ -3,7 +3,7 @@ class Stretch
   min: null,
 
   shadow: ->
-    $("##{@id}-textmetrics")
+    $("##{@id}-stretch")
 
   el: =>
     el = $("##{@id}")
@@ -15,9 +15,9 @@ class Stretch
     shadow = @shadow()    
     if not shadow.get(0)
       shadow = document.createElement "textarea"
-      shadow.id = "#{@id}-textmetrics"
+      shadow.id = "#{@id}-stretch"
       shadow.rows = 1
-      shadow.className = "textmetrics"
+      shadow.className = "stretch"
       shadow = $(shadow)      
       properties = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'word-wrap', "width"]
       for property in properties
