@@ -1,6 +1,6 @@
 # Strech
 
-Strech is a small library that allows you to change the dimensions of input elements to suit the amout of data entered by user.
+Strech is a small library that allows you to change the dimensions of textarea elements to suit the amout of data entered by user.
 
 ## Usage
 
